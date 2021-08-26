@@ -28,10 +28,10 @@ MongoClient.connect("mongodb+srv://animeman:1234@cluster0.jizts.mongodb.net/Clus
     });
 
     app.get(SHOWS_PATH, (req, res) => {
-      res.json({ message: "Hello from shows path!" });
+      console.log("Hello from shows path!");
       db.collection('shows').find().toArray()
         .then(result => {
-          console.log(result);
+          res.json(result);
         })
         .catch(error => console.error("Error in app.get - showsCollection::", error));
     });
