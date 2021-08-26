@@ -16,13 +16,13 @@ function ShowCard({show} : ShowCardProps): JSX.Element {
     </span>);
 
   return (
-    <div className="card" style={{width: "320px"}}>
+    <div className="card mb-3" style={{width: "320px"}}>
       
       <div className="card-header">
         <h3 className="h6 text-center" >{show.name}</h3>
         
         <p 
-          className="text-center"
+          className="text-center mb-0"
           style={{fontSize: "12px"}}
         >
           {show.episodes} eps
@@ -42,22 +42,20 @@ function ShowCard({show} : ShowCardProps): JSX.Element {
             style={{maxHeight: "225px"}}
           />
         </div>
-        <div className="col-1">
-      
-        </div>
-        <div className="col-5 overflow-auto" style={{maxHeight: "225px"}}>
-          <p style={{fontSize: "11px"}}>{show.description}</p>
+
+        <div className="col-6 overflow-auto" style={{maxHeight: "225px"}}>
+          <p className="ms-1 me-1" style={{fontSize: "11px"}}>{show.description}</p>
         </div>
       </div>
 
       <div className="card-footer">
         <div className="row">
-          <div className="col-8">
-            <p>{show.startedAiring.month} {show.startedAiring.day}, {show.startedAiring.year}</p>
+          <div className="col-7 text-center">
+            <p className="mb-0" style={{fontSize: "12px"}}>{show.startedAiring.month} {show.startedAiring.day}, {show.startedAiring.year}</p>
           </div>
 
-          <div className="col-4">
-            {show.score}
+          <div className="col-5">
+            <p className="mb-0" style={{fontSize: "14px"}}>{show.score}</p>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { USERS_PATH, SHOWS_PATH, ShowStructure } from "./module";
 // import { animes } from "./shows";
 import ShowCard from "./components/ShowCard";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
   const [data, setData] = useState<ShowStructure[]>([]);
@@ -44,6 +45,10 @@ function App() {
       
       <br />
       
+      <RegistrationForm />
+
+      <br />
+
       <div className="container">
         {cardRows}
       </div>
