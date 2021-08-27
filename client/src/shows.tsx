@@ -1,4 +1,4 @@
-import { ShowStructure } from "./module";
+import { ShowStructure } from "./modules/API";
 
 export const animes: ShowStructure[] = [
   {
