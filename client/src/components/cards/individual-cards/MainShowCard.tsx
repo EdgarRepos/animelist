@@ -1,11 +1,11 @@
 import React from "react";
-import {ShowStructure} from "../module";
+import {ShowStructure} from "../../../modules/API";
 
-interface ShowCardProps {
+interface MainShowCardProps {
   show: ShowStructure
 }
 
-function ShowCard({show} : ShowCardProps): JSX.Element {
+function MainShowCard({show} : MainShowCardProps): JSX.Element {
   const categories = show.genres.map(genre => 
     <span 
       className="badge rounded-pill bg-secondary"
@@ -64,4 +64,4 @@ function ShowCard({show} : ShowCardProps): JSX.Element {
   )
 }
 
-export default ShowCard;
+export default MainShowCard;

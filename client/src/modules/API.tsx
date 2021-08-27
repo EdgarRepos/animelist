@@ -1,30 +1,31 @@
-import { UserStructure, ShowStructure } from "./module";
+export const USERS_PATH = "/api/users";
+export const SHOWS_PATH = "/api/shows";
 
-export const userMessage : UserStructure = {
-  id: 1,
-  user: "Kagura",
-  password: "1234",
-  email: "example@mail.com"
-};
-
-export const showMessage : ShowStructure = {
-  id: 404,
-  name: "",
+export interface ShowStructure {
+  id: number;
+  name: string;
   startedAiring: {
-    year: 404,
-    month: "",
-    day: 404
-  },
-  description: "",
-  genres: [""],
-  episodes: 404,
-  img: "",
-  score: "N/A"
-};
+    year: number,
+    month: string,
+    day: number
+  };
+  description: string;
+  genres: string[];
+  episodes: number;
+  img: string;
+  score: number | "N/A";
+}
 
-export function postIt(body: UserStructure | ShowStructure, path: string) {
+export interface UserStructure {
+  id: string;
+  user: string;
+  password: string;
+  email: string;
+}
 
-  fetch(path, {
+export function postNewUser(body: UserStructure | ShowStructure) {
+
+  fetch(USERS_PATH, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
