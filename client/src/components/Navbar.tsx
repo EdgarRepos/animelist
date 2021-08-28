@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 
+import UserContext from "../context/UserContext";
+
 function Navbar() {
+  const userContext = useContext(UserContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -30,10 +34,15 @@ function Navbar() {
             </li>
           </ul>
 
-          <ul className="navbar-nav me-2 mb-2 mb-lg-0">
-            <li><a className="nav-link" aria-current="page" href="/register"><Link to="/register">Register</Link></a></li>
-            <li><a className="nav-link" aria-current="page" href="/login"><Link to="/login">Login</Link></a></li>
-          </ul>
+          {!userContext.isAuthorized &&
+            <ul className="navbar-nav me-2 mb-2 mb-lg-0">
+              <li><a className="nav-link" aria-current="page" href="/register"><Link to="/register">Register</Link></a></li>
+              <li><a className="nav-link" aria-current="page" href="/login"><Link to="/login">Login</Link></a></li>
+            </ul>}
+
+          {userContext.isAuthorized &&
+            <span>{userContext.userName}</span>
+          }
 
           <form className="d-flex">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>

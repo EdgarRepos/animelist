@@ -1,5 +1,8 @@
+const cookieSession = require("cookie-session");
 const express = require("express");
-const MongoClient = require("mongodb").MongoClient;
+
+const data = require("./data");
+const routes = require("./routes");
 
 const USERS_PATH = "/api/users";
 const SHOWS_PATH = "/api/shows";
@@ -7,116 +10,109 @@ const SHOWS_PATH = "/api/shows";
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(cookieSession({
+  httpOnly: false,
+  maxAge: 1000 * 3600 * 24,
+  secret: "super123secret",
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-MongoClient.connect("mongodb+srv://animeman:1234@cluster0.jizts.mongodb.net/Cluster0?retryWrites=true&w=majority")
-  .then(client => {
-    // console.log("Connected to Database");
 
-    const db = client.db('anime-list');
-    const usersCollection = db.collection('users');
-    const showsCollection = db.collection('shows');
+app.use(routes);
 
-    app.get(USERS_PATH, (req, res) => {
-      res.json({ message: "Hello from user path!" });
-      db.collection('users').find().toArray()
-        .then(result => {
-          console.log(result);
-        })
-        .catch(error => console.error("Error in app.get - usersCollection::", error));
+app.post(USERS_PATH, (req, res) => {
+  usersCollection.findOne({user: req.body.user})
+    .then(result => {
+      if (result === null) {
+        usersCollection.insertOne(req.body)
+          .then(result => {
+            console.log(result);
+            res.json(true)
+          })
+          .catch(error => console.error("Error in  createAccount: ", error))
+        
+        console.log("Account successfully created");
+        res.json(true)
+      } else {
+        console.error("Error: User already created")
+        res.json(false)
+      }
     });
+});
 
-    app.get(SHOWS_PATH, (req, res) => {
-      console.log("Hello from shows path!");
-      db.collection('shows').find().toArray()
-        .then(result => {
-          res.json(result);
-        })
-        .catch(error => console.error("Error in app.get - showsCollection::", error));
-    });
-    
-    app.post(USERS_PATH, (req, res) => {
-      // console.log(req.body)
-      usersCollection.insertOne(req.body)
-        .then(result => {
-          console.log(result)
-        })
-        .catch(error => console.error("Error in app.post - usersCollection:", error))
-
+app.post(SHOWS_PATH, (req, res) => {
+  showsCollection.insertOne(req.body)
+    .then(result => {
+      console.log(result)
     })
+    .catch(error => console.error("Error in app.post - showsCollection:", error))
 
-    app.post(SHOWS_PATH, (req, res) => {
-      // console.log(req.body)
-      showsCollection.insertOne(req.body)
-        .then(result => {
-          console.log(result)
-        })
-        .catch(error => console.error("Error in app.post - showsCollection:", error))
+})
 
-    })
-
-    app.put(USERS_PATH, (req, res) => {
-      console.log(req.body);
-      usersCollection.findOneAndUpdate(
-        { message: "Hello from client" },
-        {
-          $set: {
-            message: req.body.message
-          }
-        },
-        {
-          upsert: true
-        }
-      )
-      .then(result => {
-        res.json('Success');
-      })
-      .catch(error => console.error("Error in app.put:", error))
-    })
-
-    app.put(SHOWS_PATH, (req, res) => {
-      console.log(req.body);
-      showsCollection.findOneAndUpdate(
-        { message: "Hello from client" },
-        {
-          $set: {
-            message: req.body.message
-          }
-        },
-        {
-          upsert: true
-        }
-      )
-      .then(result => {
-        res.json('Success');
-      })
-      .catch(error => console.error("Error in app.put:", error))
-    })
-
-    app.delete(USERS_PATH, (req, res) => {
-      usersCollection.deleteOne(
-        { id: req.body.id}
-      )
-      .then(result => {
-        res.json(`Deleted "Hello from client"`)
-      })
-      .catch(error => console.error("Error in app.put:", error))
-    })
-
-    app.delete(SHOWS_PATH, (req, res) => {
-      showsCollection.deleteOne(
-        { id: req.body.id}
-      )
-      .then(result => {
-        res.json(`Deleted "Hello from client"`)
-      })
-      .catch(error => console.error("Error in app.put:", error))
-    })
-
+app.put(USERS_PATH, (req, res) => {
+  console.log(req.body);
+  user
+  usersCollection.findOneAndUpdate(
+    { message: "Hello from client" },
+    {
+      $set: {
+        message: req.body.message
+      }
+    },
+    {
+      upsert: true
+    }
+  )
+  .then(() => {
+    res.json('Success');
   })
-  .catch(error => console.error("Error on MongoClient.connect:", error));
+  .catch(error => console.error("Error in app.put:", error))
+})
+
+app.put(SHOWS_PATH, (req, res) => {
+  console.log(req.body);
+  showsCollection.findOneAndUpdate(
+    { message: "Hello from client" },
+    {
+      $set: {
+        message: req.body.message
+      }
+    },
+    {
+      upsert: true
+    }
+  )
+  .then(() => {
+    res.json('Success');
+  })
+  .catch(error => console.error("Error in app.put:", error))
+})
+
+app.delete(USERS_PATH, (req, res) => {
+  usersCollection.deleteOne(
+    { id: req.body.id}
+  )
+  .then(() => {
+    res.json(`Deleted "Hello from client"`)
+  })
+  .catch(error => console.error("Error in app.put:", error))
+})
+
+app.delete(SHOWS_PATH, (req, res) => {
+  showsCollection.deleteOne(
+    { id: req.body.id}
+  )
+  .then(() => {
+    res.json(`Deleted "Hello from client"`)
+  })
+  .catch(error => console.error("Error in app.put:", error))
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
+});
+
+data.connect().then(() => {
+  console.log("Succesfully connected to the database");
 });
