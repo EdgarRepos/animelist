@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from "react";
-import { SHOWS_PATH, ShowStructure } from "../../modules/API";
+import { SHOWS_PATH, ShowStructure, getShows } from "../../modules/API";
 import MainShowCard from "./individual-cards/MainShowCard";
 
 function AllShows() {
   const [data, setData] = useState<ShowStructure[]>([]);
 
   useEffect(() => {
-    fetch(SHOWS_PATH)
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    getShows(setData)
   }, []);
 
   const renderCards : JSX.Element[] = data.map(anime => 
-    <div key={anime.id} className="col-sm">
+    <div key={anime.id} className="col-md align-self-center">
       <MainShowCard show={anime} />
     </div>
   )
@@ -30,7 +28,7 @@ function AllShows() {
     }
 
     return (
-      <div className="row" key={id}>
+      <div className="row justify-content-center" key={id}>
         {renderCards[arrayIndex]}
         {renderCards[arrayIndex + 1]}
         {renderCards[arrayIndex + 2]}
@@ -39,7 +37,7 @@ function AllShows() {
   })
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       {cardRows}
     </div>
   )

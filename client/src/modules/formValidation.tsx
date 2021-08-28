@@ -4,6 +4,11 @@ export interface RegisterFields {
   password: string
 }
 
+export interface LoginFields {
+  username: string,
+  password: string
+}
+
 function validateEmail(mail : string) : boolean {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
@@ -25,11 +30,16 @@ function validateUsername(password: string) : boolean {
   return false;
 }
 
-function validateFields({ email, username, password } : RegisterFields) : boolean {
-  if (validateEmail(email) && validatePassword(password) && validateUsername(username)) {
+export function validateLoginFields({ username, password } : LoginFields) : boolean {
+  if (validatePassword(password) && validateUsername(username)) {
     return true;
   }
   return false;
 }
 
-export default validateFields;
+export function validateRegisterFields({ email, username, password } : RegisterFields) : boolean {
+  if (validateEmail(email) && validatePassword(password) && validateUsername(username)) {
+    return true;
+  }
+  return false;
+}

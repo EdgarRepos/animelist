@@ -1,3 +1,5 @@
+import React from "react";
+
 export const USERS_PATH = "/api/users";
 export const SHOWS_PATH = "/api/shows";
 
@@ -23,9 +25,18 @@ export interface UserStructure {
   email: string;
 }
 
-export function postNewUser(body: UserStructure | ShowStructure) {
+export interface PostUserStructure {
+  user: string;
+  password: string;
+}
 
-  fetch(USERS_PATH, {
+export interface PostUserLoginStructure {
+  username: string,
+  password: string,
+}
+
+async function postUser(body : UserStructure | PostUserStructure) {
+  return fetch(USERS_PATH, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -33,30 +44,51 @@ export function postNewUser(body: UserStructure | ShowStructure) {
     body: JSON.stringify(body)
   })
     .then((res) => res.json())
-    .then((data) => console.log(data.message));
+    .then((data) => data);
 }
 
-export function putIt(body: UserStructure | ShowStructure, path: string) {
-  fetch(path, {
-    method: "PUT",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(body)
-  })
+export async function postUserLogin (body: PostUserLoginStructure) {
+  return fetch("/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    })
+    .then((res) => res.json());
+}
+
+export function postNewUser(body : UserStructure) {
+  return postUser(body);
+}
+
+export function getShows(setFunc : Function) {
+  fetch(SHOWS_PATH)
     .then((res) => res.json())
-    .then((data) => console.log(data))
+    .then((data) => setFunc(data));
+}
+
+// export function putIt(body: UserStructure | ShowStructure, path: string) {
+//   fetch(path, {
+//     method: "PUT",
+//     headers: {
+//       "Content-type": "application/json"
+//     },
+//     body: JSON.stringify(body)
+//   })
+//     .then((res) => res.json())
+//     .then((data) => console.log(data))
   
-}
+// }
 
-export function deleteIt(body: UserStructure | ShowStructure, path: string) {
-  fetch(path, {
-    method: "DELETE",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(body) //you only need to send one "unique" parameter, like name: "name"
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data))
-}
+// export function deleteIt(body: UserStructure | ShowStructure, path: string) {
+//   fetch(path, {
+//     method: "DELETE",
+//     headers: {
+//       "Content-type": "application/json"
+//     },
+//     body: JSON.stringify(body) //you only need to send one "unique" parameter, like name: "name"
+//   })
+//     .then((res) => res.json())
+//     .then((data) => console.log(data))
+// }
