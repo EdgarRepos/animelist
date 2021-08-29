@@ -1,10 +1,15 @@
 import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 
-import UserContext from "../context/UserContext";
+import { logOut } from "../../modules/API";
+import UserContext from "../../context/UserContext";
 
 function Navbar() {
   const userContext = useContext(UserContext);
+
+  function handleLogOut() {
+    logOut();
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,7 +46,16 @@ function Navbar() {
             </ul>}
 
           {userContext.isAuthorized &&
-            <span>{userContext.userName}</span>
+            <ul className="navbar-nav">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {userContext.userName}
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a className="dropdown-item" href="/" onClick={handleLogOut}>Log Out</a></li>
+                </ul>
+              </li>
+            </ul>
           }
 
           <form className="d-flex">

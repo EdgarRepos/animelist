@@ -1,42 +1,62 @@
-import React from "react";
-
-export const USERS_PATH = "/api/users";
-export const SHOWS_PATH = "/api/shows";
+export const USERS_PATH = "/users";
+export const SHOWS_PATH = "/shows";
+export const WATCHLIST_PATH = "/watchlist";
+export const LOGIN_PATH = "/users/login";
+export const REGISTER_PATH = "/users/register";
+export const LOG_OUT_PATH = "/users/logout";
 
 export interface ShowStructure {
-  id: number;
-  name: string;
-  startedAiring: {
-    year: number,
-    month: string,
-    day: number
-  };
   description: string;
-  genres: string[];
   episodes: number;
+  genres: string[];
+  id: number;
   img: string;
+  name: string;
   score: number | "N/A";
+  startedAiring: {
+    year: number;
+    month: string;
+    day: number;
+  };
 }
 
 export interface UserStructure {
-  id: string;
-  user: string;
-  password: string;
   email: string;
+  password: string;
+  username: string;
 }
 
 export interface PostUserStructure {
-  user: string;
   password: string;
+  user: string;
 }
 
 export interface PostUserLoginStructure {
-  username: string,
-  password: string,
+  password: string;
+  username: string;
 }
 
-async function postUser(body : UserStructure | PostUserStructure) {
-  return fetch(USERS_PATH, {
+export interface PostShowReviewStructure {
+  episodes: number;
+  name: string;
+  status: string;
+  score: number | "N/A";
+}
+
+export function getShows() {
+  return fetch(SHOWS_PATH)
+    .then(res => res.json())
+    .catch(error => console.log(error));
+}
+
+export function logOut() {
+  return fetch(LOG_OUT_PATH)
+    .then(res => res.json())
+    .catch(error => console.log(error));
+}
+
+export async function postNewUser(body : UserStructure | PostUserStructure) {
+  return fetch(REGISTER_PATH, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -48,7 +68,7 @@ async function postUser(body : UserStructure | PostUserStructure) {
 }
 
 export async function postUserLogin (body: PostUserLoginStructure) {
-  return fetch("/users/login", {
+  return fetch(LOGIN_PATH, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,14 +78,15 @@ export async function postUserLogin (body: PostUserLoginStructure) {
     .then((res) => res.json());
 }
 
-export function postNewUser(body : UserStructure) {
-  return postUser(body);
-}
-
-export function getShows(setFunc : Function) {
-  fetch(SHOWS_PATH)
-    .then((res) => res.json())
-    .then((data) => setFunc(data));
+export async function postShowReview (body: PostShowReviewStructure) {
+  return fetch(WATCHLIST_PATH, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    })
+    .then((res) => res.json());
 }
 
 // export function putIt(body: UserStructure | ShowStructure, path: string) {

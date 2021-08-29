@@ -10,7 +10,6 @@ function LoginForm() {
     password: "",
     username: ""
   });
-  const [isLoginValid, setIsLoginValid] = useState<boolean>(false);
   const [hasSubmitBeenClicked, setHasSubmitBeenClicked] = useState<boolean>(false);
   const userContext = useContext(UserContext);
 
@@ -40,7 +39,7 @@ function LoginForm() {
       });
 
       if (postAnswer.authorized) {
-        userContext.setUser(true, postAnswer.userId, postAnswer.userName);
+        userContext.setUser(postAnswer.authorized, postAnswer.userId, postAnswer.userName);
       }
     }
   }
@@ -49,13 +48,13 @@ function LoginForm() {
     <form onSubmit={handleSubmit}>
       <div className="mb-2">
         <label className="form-label" htmlFor="usernameInput">Username</label>
-        <input className="form-control" disabled={isLoginValid} onChange={handleChange} id="usernameInput" name="username" type="text" value={values.username} />
+        <input className="form-control" disabled={userContext.isAuthorized} onChange={handleChange} id="usernameInput" name="username" type="text" value={values.username} />
       </div>
 
       <div className="mb-3">
         <label className="form-label" htmlFor="passwordInput">Password</label>
-        <input className="form-control" disabled={isLoginValid} onChange={handleChange} id="passwordInput" name="password" type="password" value={values.password}/>
-        {hasSubmitBeenClicked && isLoginValid ? <span className="badge text-dark">Wrong username or password</span> : null}
+        <input className="form-control" disabled={userContext.isAuthorized} onChange={handleChange} id="passwordInput" name="password" type="password" value={values.password}/>
+        {hasSubmitBeenClicked && userContext.isAuthorized ? <span className="badge text-dark">Wrong username or password</span> : null}
       </div>
 
       <div className="mt-2 text-center">

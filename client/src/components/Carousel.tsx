@@ -5,10 +5,16 @@ function Carousel() {
   const [data, setData] = useState<ShowStructure[]>([]);
 
   useEffect(() => {
-    getShows(setData);
+    getShows().then(shows => setData(shows));
   }, []);
 
+  function randomImg() : ShowStructure {
+    const randomNumber = Math.floor(Math.random() * data.length);
+    return data[randomNumber];
+  }
+
   return (
+    
     <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
       <div className="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -17,23 +23,23 @@ function Carousel() {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="" className="d-block w-100" alt="..."/>
+          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
+            <h5>{data.length ? randomImg().name : ""}</h5>
             <p>Some representative placeholder content for the first slide.</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src="..." className="d-block w-100" alt="..."/>
+          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
+            <h5>{data.length ? randomImg().name : ""}</h5>
             <p>Some representative placeholder content for the second slide.</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src="..." className="d-block w-100" alt="..."/>
+          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
+            <h5>{data.length ? randomImg().name : ""}</h5>
             <p>Some representative placeholder content for the third slide.</p>
           </div>
         </div>
@@ -46,7 +52,8 @@ function Carousel() {
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Next</span>
       </button>
-    </div>
+  </div>
+  
   )
 }
 

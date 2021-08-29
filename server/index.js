@@ -18,28 +18,7 @@ app.use(cookieSession({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use(routes);
-
-app.post(USERS_PATH, (req, res) => {
-  usersCollection.findOne({user: req.body.user})
-    .then(result => {
-      if (result === null) {
-        usersCollection.insertOne(req.body)
-          .then(result => {
-            console.log(result);
-            res.json(true)
-          })
-          .catch(error => console.error("Error in  createAccount: ", error))
-        
-        console.log("Account successfully created");
-        res.json(true)
-      } else {
-        console.error("Error: User already created")
-        res.json(false)
-      }
-    });
-});
 
 app.post(SHOWS_PATH, (req, res) => {
   showsCollection.insertOne(req.body)
@@ -52,7 +31,6 @@ app.post(SHOWS_PATH, (req, res) => {
 
 app.put(USERS_PATH, (req, res) => {
   console.log(req.body);
-  user
   usersCollection.findOneAndUpdate(
     { message: "Hello from client" },
     {
