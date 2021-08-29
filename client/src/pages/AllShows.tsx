@@ -1,17 +1,17 @@
 import React from "react";
-import Carousel from "../components/Carousel";
+import AllShowsCards from "../components/cards/AllShowsCards";
 
-function Home() {
+function AllShows() {
   return (
     <div className="container-fluid">
       <div className="container-fluid mb-4 ps-0 ms-0">
-        <h2 className="h4">Welcome to AnimeList!</h2>
+        <h2 className="h4">Anime</h2>
       </div>
       <div className="container-fluid">
-        <Carousel />
+        <AllShowsCards />
       </div>
     </div>
   )
 }
 
-export default Home;
+export default AllShows;

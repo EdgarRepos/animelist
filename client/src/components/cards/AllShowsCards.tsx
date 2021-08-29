@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
-import { SHOWS_PATH, ShowStructure, getShows } from "../../modules/API";
+import { ShowStructure, getShows } from "../../modules/API";
 import MainShowCard from "./individual-cards/MainShowCard";
 
-function AllShows() {
+function AllShowsCards() {
   const [data, setData] = useState<ShowStructure[]>([]);
 
   useEffect(() => {
-    getShows(setData)
+    getShows().then(shows => setData(shows));
   }, []);
 
   const renderCards : JSX.Element[] = data.map(anime => 
@@ -43,4 +43,4 @@ function AllShows() {
   )
 }
 
-export default AllShows;
+export default AllShowsCards;
