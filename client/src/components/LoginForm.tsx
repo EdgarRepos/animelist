@@ -18,8 +18,8 @@ function LoginForm() {
     setValues({
       ...values,
       [name]: value
-    })
-  }
+    });
+  };
 
   async function handleSubmit(e : React.FormEvent<EventTarget>) {
     e.preventDefault();
@@ -40,9 +40,9 @@ function LoginForm() {
 
       if (postAnswer.authorized) {
         userContext.setUser(postAnswer.authorized, postAnswer.userId, postAnswer.userName);
-      }
-    }
-  }
+      };
+    };
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -54,17 +54,14 @@ function LoginForm() {
       <div className="mb-3">
         <label className="form-label" htmlFor="passwordInput">Password</label>
         <input className="form-control" disabled={userContext.isAuthorized} onChange={handleChange} id="passwordInput" name="password" type="password" value={values.password}/>
-        {hasSubmitBeenClicked && userContext.isAuthorized ? <span className="badge text-dark">Wrong username or password</span> : null}
+        {hasSubmitBeenClicked ? <span className="badge text-dark">Wrong username or password</span> : null}
       </div>
 
       <div className="mt-2 text-center">
-        {!userContext.isAuthorized
-          ? <button className="btn btn-primary" type="submit">Login</button>
-          : <h3>Welcome back! Enjoy AnimeList to the fullest.</h3>
-        }
+        <button className="btn btn-primary" type="submit">Login</button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default LoginForm;

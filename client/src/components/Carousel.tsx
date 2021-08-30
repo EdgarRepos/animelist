@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { getShows, ShowStructure } from "../modules/API";
+import { getHeaders, HeaderStructure } from "../modules/API";
 
 function Carousel() {
-  const [data, setData] = useState<ShowStructure[]>([]);
+  const [data, setData] = useState<HeaderStructure[]>([]);
 
   useEffect(() => {
-    getShows().then(shows => setData(shows));
+    getHeaders().then(headers => setData(headers));
   }, []);
-
-  function randomImg() : ShowStructure {
-    const randomNumber = Math.floor(Math.random() * data.length);
-    return data[randomNumber];
-  }
 
   return (
     
@@ -23,24 +18,24 @@ function Carousel() {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
+          <img src={data.length ? data[0].img : ""} className="d-block w-100" alt={data.length ? data[0].title : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>{data.length ? randomImg().name : ""}</h5>
-            <p>Some representative placeholder content for the first slide.</p>
+            <h5>{data.length ? data[0].title : ""}</h5>
+            <p>{data.length ? data[0].subtitle : ""}</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
+          <img src={data.length ? data[1].img : ""} className="d-block w-100" alt={data.length ? data[1].title : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>{data.length ? randomImg().name : ""}</h5>
-            <p>Some representative placeholder content for the second slide.</p>
+            <h5>{data.length ? data[1].title : ""}</h5>
+            <p>{data.length ? data[1].subtitle : ""}</p>
           </div>
         </div>
         <div className="carousel-item">
-          <img src={data.length ? randomImg().img : ""} className="d-block w-100" alt={data.length ? randomImg().name : ""}/>
+          <img src={data.length ? data[2].img : ""} className="d-block w-100" alt={data.length ? data[2].title : ""}/>
           <div className="carousel-caption d-none d-md-block">
-            <h5>{data.length ? randomImg().name : ""}</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+            <h5>{data.length ? data[2].title : ""}</h5>
+            <p>{data.length ? data[2].subtitle : ""}</p>
           </div>
         </div>
       </div>
@@ -54,7 +49,7 @@ function Carousel() {
       </button>
   </div>
   
-  )
-}
+  );
+};
 
-export default Carousel
+export default Carousel;
