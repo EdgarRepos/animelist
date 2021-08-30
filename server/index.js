@@ -4,9 +4,6 @@ const express = require("express");
 const data = require("./data");
 const routes = require("./routes");
 
-const USERS_PATH = "/api/users";
-const SHOWS_PATH = "/api/shows";
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -19,73 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
-
-app.post(SHOWS_PATH, (req, res) => {
-  showsCollection.insertOne(req.body)
-    .then(result => {
-      console.log(result)
-    })
-    .catch(error => console.error("Error in app.post - showsCollection:", error))
-
-})
-
-app.put(USERS_PATH, (req, res) => {
-  console.log(req.body);
-  usersCollection.findOneAndUpdate(
-    { message: "Hello from client" },
-    {
-      $set: {
-        message: req.body.message
-      }
-    },
-    {
-      upsert: true
-    }
-  )
-  .then(() => {
-    res.json('Success');
-  })
-  .catch(error => console.error("Error in app.put:", error))
-})
-
-app.put(SHOWS_PATH, (req, res) => {
-  console.log(req.body);
-  showsCollection.findOneAndUpdate(
-    { message: "Hello from client" },
-    {
-      $set: {
-        message: req.body.message
-      }
-    },
-    {
-      upsert: true
-    }
-  )
-  .then(() => {
-    res.json('Success');
-  })
-  .catch(error => console.error("Error in app.put:", error))
-})
-
-app.delete(USERS_PATH, (req, res) => {
-  usersCollection.deleteOne(
-    { id: req.body.id}
-  )
-  .then(() => {
-    res.json(`Deleted "Hello from client"`)
-  })
-  .catch(error => console.error("Error in app.put:", error))
-})
-
-app.delete(SHOWS_PATH, (req, res) => {
-  showsCollection.deleteOne(
-    { id: req.body.id}
-  )
-  .then(() => {
-    res.json(`Deleted "Hello from client"`)
-  })
-  .catch(error => console.error("Error in app.put:", error))
-})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
