@@ -19,8 +19,8 @@ function RegisterForm() {
     setValues({
       ...values,
       [name]: value
-    })
-  }
+    });
+  };
 
   async function handleSubmit(e : React.FormEvent<EventTarget>) {
     e.preventDefault();
@@ -29,7 +29,7 @@ function RegisterForm() {
       email: "",
       password: "",
       username: ""
-    })
+    });
     
     const isFieldValuesValid = validateRegisterFields(values);
 
@@ -39,13 +39,13 @@ function RegisterForm() {
         username: values.username,
         password: values.password,
         email: values.email
-      })
+      });
 
       if (postAnswer.authorized) {
         userContext.setUser(postAnswer.authorized, postAnswer.userId, postAnswer.userName)
-      }
-    }
-  }
+      };
+    };
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ function RegisterForm() {
         <h3>Congratulations {values.username}! You have successfully registed. Now you can enjoy AnimeList to the fullest.</h3>}
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default RegisterForm;

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import About from "./pages/About";
 import AllShows from "./pages/AllShows";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import TopShows from "./pages/TopShows";
-import Navbar from "./components/navbar/Navbar";
+import Watchlist from "./pages/Watchlist";
+import Navbar from "./components/Navbar";
 
+import { getMyAccount } from "./modules/API";
 import UserContext from "./context/UserContext";
 
 function App() {
@@ -27,18 +28,26 @@ function App() {
     },
   };
 
+  useEffect(() => {
+    getMyAccount().then(account => {
+      setIsAuthorized(true);
+      setUserId(account.userId);
+      setUserName(account.userName);
+    })
+  })
+
   return (
-    <div className="container-fluid pe-0 ps-0" style={{maxWidth: "1100px"}}>
+    <div className="container-fluid pe-1 ps-1 pb-2 border" style={{maxWidth: "1100px"}}>
       <Router>
         <UserContext.Provider value={userContextValue}>
           <Navbar />
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/about" component={About}/>
             <Route path="/allshows" component={AllShows}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
             <Route path="/topshows" component={TopShows}/>
+            <Route path="/watchlist" component={Watchlist}/>
           </Switch>
         </UserContext.Provider>
       </Router>

@@ -1,78 +1,80 @@
 import React, { useState } from "react";
-import { isNumber } from "util";
 import { postShowReview, PostShowReviewStructure } from "../modules/API";
 
-interface LoginFormObject {
+interface ShowFormStructure {
   episodes: number;
   name: string;
-}
+  _id: string;
+};
 
-interface LoginFormProps {
-  show: LoginFormObject;
-}
+interface ShowFormProps {
+  show: ShowFormStructure;
+};
 
-function ShowForm({show} : LoginFormProps) {
+function ShowForm({show} : ShowFormProps) {
   const [review, setReview] = useState<PostShowReviewStructure>({
     episodes: 0,
     name: show.name,
+    showId: show._id,
     status: "Watching",
     score: "N/A"
   });
-  const [hasSubmitBeenClicked, setHasSubmitBeenClicked] = useState<boolean>(false);
-  const [isValid, setIsValid] = useState<boolean>(false);
 
   function handleChange(e : React.FormEvent<EventTarget>) {
     const {name, value} = e.target as HTMLInputElement;
-    setReview({
-      ...review,
-      [name]: Number(value)
-    })
+    if (name === "status") {
+      setReview({
+        ...review,
+        [name]: value
+      });
+    } else {
+      setReview({
+        ...review,
+        [name]: Number(value)
+      });
+    }
   }
 
   function handleSubmit(e : React.FormEvent<EventTarget>) {
     e.preventDefault();
-    setHasSubmitBeenClicked(true);
 
-    if (isNaN(review.episodes)) {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
+    if (!isNaN(review.episodes)) {
       console.log(review);
-      postShowReview(review)
-    }
-  }
+      postShowReview(review);
+    };
+  };
 
   return (
   
     <form onSubmit={handleSubmit}>
       <div className="mb-3 row">
-        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Anime Title</label>
-        <div className="col-sm-10">
-          <h3 className="h5 form-control-plaintext pb-0" id="staticEmail">{show.name}</h3>
+        <label htmlFor="showName" className="col-sm-5 col-form-label">Anime Title</label>
+        <div className="col-sm">
+          <h3 className="h5 form-control-plaintext pb-0" id="showName">{show.name}</h3>
         </div>
       </div>
       <div className="mb-3 row">
-        <label htmlFor="inputStatus" className="col-sm-2 col-form-label">Status</label>
-        <div className="col-sm-2">
+        <label htmlFor="inputStatus" className="col-sm-5 col-form-label">Status</label>
+        <div className="col-sm">
           <select className="form-select" id="inputStatus" name="status" onChange={handleChange}>
-            <option>Watching</option>
-            <option>Plan to watch</option>
-            <option>Completed</option>
+            <option value="Watching">Watching</option>
+            <option value="Plan to watch">Plan to watch</option>
+            <option value="Completed">Completed</option>
           </select>
         </div>
       </div>
       <div className="mb-3 row">
-        <label htmlFor="inputScore" className="col-sm-2 col-form-label">Episodes watched</label>
-        <div className="col-sm-1">
-          <input className="form-control" id="inputScore" onChange={handleChange} type="text" name="episodes" value={review.episodes}/>
+        <label htmlFor="inputEpisodes" className="col-sm-5 col-form-label">Episodes watched</label>
+        <div className="col-sm">
+          <input className="form-control" id="inputEpisodes" onChange={handleChange} type="text" name="episodes" value={review.episodes}/>
         </div>
-        <div className="col-sm-1">
+        <div className="col-sm">
           <span>/ {show.episodes}</span>
         </div>
       </div>
       <div className="mb-3 row">
-        <label htmlFor="scoreSelect" className="col-sm-2 col-form-label">Score</label>
-        <div className="col-sm-2">
+        <label htmlFor="scoreSelect" className="col-sm-5 col-form-label">Score</label>
+        <div className="col-sm">
           <select id="scoreSelect" className="form-select" name="score" onChange={handleChange}>
             <option selected>Select Score</option>
             <option value="10">10 (Masterpiece)</option>
@@ -89,12 +91,14 @@ function ShowForm({show} : LoginFormProps) {
         </div>
       </div>
       <div className="row">
-        <button className="btn btn-primary" type="submit" >Submit</button>
+        <div className="d-grid gap-2 d-md-flex justify-content-center">
+          <button className="btn btn-primary me-md-2" type="submit">Submit</button>
+        </div>
       </div>
       
     </form>
 
-  )
-}
+  );
+};
 
 export default ShowForm;
