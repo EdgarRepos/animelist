@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { ShowStructure, WatchListStructure, getWatchlist } from "../../modules/API";
+import { WatchListStructure, getWatchlist } from "../../modules/API";
 import WatchListCard from "./individual-cards/WatchListCard";
 
 function AllWatchListCards() {
@@ -8,6 +8,10 @@ function AllWatchListCards() {
   useEffect(() => {
     getWatchlist().then(shows => setData(shows));
   }, []);
+
+  function handleWatchlistUpdate() {
+    getWatchlist().then(shows => setData(shows));
+  }
 
   const renderCards : JSX.Element[] = data.map((anime, index) => {
     const topShowProps : WatchListStructure = {
@@ -24,7 +28,7 @@ function AllWatchListCards() {
       },
       watched: anime.watched,
     }
-    return <WatchListCard show={topShowProps} rank={index + 1} key={anime._id}/>
+    return <WatchListCard show={topShowProps} rank={index + 1} onWatchListUpdate={handleWatchlistUpdate} key={anime._id}/>
   });
 
   return (

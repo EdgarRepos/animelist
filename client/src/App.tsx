@@ -30,9 +30,9 @@ function App() {
 
   useEffect(() => {
     getMyAccount().then(account => {
-      setIsAuthorized(true);
-      setUserId(account.userId);
-      setUserName(account.userName);
+      if (account && account.userId) {
+        userContextValue.setUser(true, account.userId, account.userName);
+      } else console.log(account)
     })
   })
 

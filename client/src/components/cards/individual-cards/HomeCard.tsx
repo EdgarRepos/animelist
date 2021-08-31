@@ -10,10 +10,10 @@ interface HomeCardProps {
 function HomeCard({title, paragraph, paragraph2, paragraph3} : HomeCardProps): JSX.Element {
 
   return (
-    <div className="card mb-3 mx-auto" style={{width: "320px"}}>
+    <div className="card mb-3 mx-auto text-center text-secondary border-primary" style={{width: "320px"}}>
       
-      <div className="card-header">
-        <h3 className="h4 text-center" >{title}</h3>
+      <div className="card-header text-dark">
+        <h3 className="card-title" >{title}</h3>
       </div>
 
       <div className="card-body">

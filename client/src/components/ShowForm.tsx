@@ -9,9 +9,11 @@ interface ShowFormStructure {
 
 interface ShowFormProps {
   show: ShowFormStructure;
+  onSubmit: () => void;
+  onCancel: () => void;
 };
 
-function ShowForm({show} : ShowFormProps) {
+function ShowForm({onCancel, onSubmit, show} : ShowFormProps) {
   const [review, setReview] = useState<PostShowReviewStructure>({
     episodes: 0,
     name: show.name,
@@ -22,6 +24,29 @@ function ShowForm({show} : ShowFormProps) {
 
   function handleChange(e : React.FormEvent<EventTarget>) {
     const {name, value} = e.target as HTMLInputElement;
+
+    if (name === "episodes") {
+      const trueValue =  Number(value);
+
+      if (isNaN(trueValue) || trueValue < 0) {
+        setReview({
+          ...review,
+          [name]: 0
+        });
+      } else if (trueValue > show.episodes) {
+        setReview({
+          ...review,
+          [name]: show.episodes
+        });
+      } else {
+        setReview({
+          ...review,
+          [name]: trueValue
+        });
+      }
+      return;
+    }
+    
     if (name === "status") {
       setReview({
         ...review,
@@ -37,15 +62,18 @@ function ShowForm({show} : ShowFormProps) {
 
   function handleSubmit(e : React.FormEvent<EventTarget>) {
     e.preventDefault();
+    onSubmit();
+
+    if (review.episodes)
 
     if (!isNaN(review.episodes)) {
       console.log(review);
+      
       postShowReview(review);
     };
   };
 
   return (
-  
     <form onSubmit={handleSubmit}>
       <div className="mb-3 row">
         <label htmlFor="showName" className="col-sm-5 col-form-label">Anime Title</label>
@@ -76,7 +104,7 @@ function ShowForm({show} : ShowFormProps) {
         <label htmlFor="scoreSelect" className="col-sm-5 col-form-label">Score</label>
         <div className="col-sm">
           <select id="scoreSelect" className="form-select" name="score" onChange={handleChange}>
-            <option selected>Select Score</option>
+            <option value="N/A">Select Score</option>
             <option value="10">10 (Masterpiece)</option>
             <option value="9">9 (Great)</option>
             <option value="8">8 (Very Good)</option>
@@ -92,6 +120,7 @@ function ShowForm({show} : ShowFormProps) {
       </div>
       <div className="row">
         <div className="d-grid gap-2 d-md-flex justify-content-center">
+          <button className="btn btn-danger me-md-2" type="button" onClick={onCancel}>Cancel</button>
           <button className="btn btn-primary me-md-2" type="submit">Submit</button>
         </div>
       </div>

@@ -27,16 +27,10 @@ function getCollection(name) {
   });
 }
 
-exports.getWatchListShow = function(userId) {
-  return getCollection(WATCH_LIST_COLLECTION)
-    .then(collection => collection.findOne({userId: userId}));
-};
-
-exports.getMyWatchList = function(userId, array) {
-  return getCollection(WATCH_LIST_COLLECTION)
-    .then(collection => collection.find({ userId: { $in: array } } )
-    );
-};
+// exports.getWatchListShow = function(userId) {
+//   return getCollection(WATCH_LIST_COLLECTION)
+//     .then(collection => collection.findOne({userId: new ObjectId(userId)}));
+// };
 
 exports.getUser = function(username) {
   return getCollection(USERS_COLLECTION)
@@ -112,8 +106,8 @@ exports.updateWatchListShow = function(show, userId) {
   return getCollection(WATCH_LIST_COLLECTION)
     .then(collection => collection.findOneAndUpdate(
       {
-        userId: userId,
-        showId: show.showId,
+        userId: ObjectId(userId),
+        showId: ObjectId(show.showId),
       },
       {
         $set: {
