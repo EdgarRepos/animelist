@@ -4,27 +4,33 @@ export interface RegisterFields {
   password: string
 };
 
+export interface ValidRegisterFields {
+  email: boolean,
+  username: boolean,
+  password: boolean
+};
+
 export interface LoginFields {
   username: string,
   password: string
 };
 
-function validateEmail(mail : string) : boolean {
+export function validateEmail(mail : string) : boolean {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
   }
   return false;
 };
 
-function validatePassword(password: string) : boolean {
-  if (password.length >= 5 && password.length < 15) {
+export function validatePassword(password: string) : boolean {
+  if (password.length >= 5 && password.length <= 15) {
     return true;
   }
   return false;
 };
 
-function validateUsername(password: string) : boolean {
-  if (password.length >= 3 && password.length < 10) {
+export function validateUsername(username: string) : boolean {
+  if (username.length >= 3 && username.length <= 10) {
     return true;
   }
   return false;

@@ -3,25 +3,27 @@ import { WatchListStructure } from "../../../modules/API";
 import ShowForm from "../../ShowForm";
 
 interface WatchListProps {
-  show: WatchListStructure,
-  rank: number
+  show: WatchListStructure;
+  rank: number;
+  onWatchListUpdate: () => void;
 };
 
 function WatchListCard(props : WatchListProps): JSX.Element {
   const [showForm, setShowForm] = useState<boolean>(false);
-  const {show, rank} = props;
+  const {show, rank, onWatchListUpdate} = props;
   const {year, month, day} = show.startedAiring;
 
   function handleClick() {
-    setShowForm(!showForm);
+    setShowForm(true);
   };
 
-  if (show.watched > show.episodes) {
-    show.watched = show.episodes;
-  };
+  function handleOnFormCancel() {
+    setShowForm(false);
+  }
 
-  if (show.watched < 0) {
-    show.watched = 0;
+  function handleOnFormSubmit() {
+    setShowForm(false);
+    onWatchListUpdate();
   };
 
   return (
@@ -51,12 +53,12 @@ function WatchListCard(props : WatchListProps): JSX.Element {
           <p className="mt-4">{show.score || "N/A"}</p>
         </div>
         <div className="p-2 bg-light col-2 border text-center">
-          <button className={!showForm ? "btn btn-primary mt-4" : "btn btn-danger mt-4"} onClick={handleClick} type="button" >{!showForm ? show.status : "Cancel"}</button> 
+          {!showForm && <button className="btn btn-primary mt-4" onClick={handleClick} type="button" >{show.status}</button>} 
         </div>
       </div>
       {showForm && 
         <div className="container-fluid mx-auto" style={{maxWidth: "400px"}}>
-          <ShowForm show={show}/>
+          <ShowForm show={show} onCancel={handleOnFormCancel} onSubmit={handleOnFormSubmit} />
         </div>
       }
     </div>

@@ -25,7 +25,15 @@ function TopShowCard(props : TopShowProps): JSX.Element {
   const {year, month, day} = show.startedAiring;
 
   function handleClick() {
-    setShowForm(!showForm);
+    setShowForm(true);
+  };
+
+  function handleOnFormCancel() {
+    setShowForm(false);
+  }
+
+  function handleOnFormSubmit() {
+    setShowForm(false);
   };
 
   return (
@@ -55,12 +63,12 @@ function TopShowCard(props : TopShowProps): JSX.Element {
           <p className="mt-4">{show.score}</p>
         </div>
         <div className="p-2 bg-light col-2 border text-center">
-          <button className={!showForm ? "btn btn-primary mt-4" : "btn btn-danger mt-4"} onClick={handleClick} type="button" >{!showForm ? "Add to WatchList" : "Cancel"}</button> 
+          {!showForm && <button className="btn btn-primary mt-4" onClick={handleClick} type="button">Add to WatchList</button>}
         </div>
       </div>
       {showForm && 
         <div className="container-fluid mx-auto" style={{maxWidth: "400px"}}>
-          <ShowForm show={show}/>
+          <ShowForm show={show} onSubmit={handleOnFormSubmit} onCancel={handleOnFormCancel} />
         </div>
       }
     </div>
