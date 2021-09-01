@@ -5,6 +5,9 @@ interface ShowFormStructure {
   episodes: number;
   name: string;
   _id: string;
+  status: string;
+  myScore: number | "N/A";
+  current: number;
 };
 
 interface ShowFormProps {
@@ -16,11 +19,11 @@ interface ShowFormProps {
 
 function ShowForm({onCancel, onSubmit, onUpdate, show} : ShowFormProps) {
   const [review, setReview] = useState<PostShowReviewStructure>({
-    episodes: 0,
+    episodes: show.current || 0,
     name: show.name,
     showId: show._id,
-    status: "Watching",
-    score: "N/A"
+    status: show.status || "Add to Watchlist",
+    score: show.myScore || "N/A"
   });
 
   function handleChange(e : React.FormEvent<EventTarget>) {
@@ -83,7 +86,7 @@ function ShowForm({onCancel, onSubmit, onUpdate, show} : ShowFormProps) {
       <div className="mb-3 row">
         <label htmlFor="inputStatus" className="col-sm-5 col-form-label">Status</label>
         <div className="col-sm">
-          <select className="form-select" id="inputStatus" name="status" onChange={handleChange}>
+          <select className="form-select" id="inputStatus" name="status" value={review.status} onChange={handleChange}>
             <option value="Watching">Watching</option>
             <option value="Plan to watch">Plan to watch</option>
             <option value="Completed">Completed</option>
@@ -102,7 +105,7 @@ function ShowForm({onCancel, onSubmit, onUpdate, show} : ShowFormProps) {
       <div className="mb-3 row">
         <label htmlFor="scoreSelect" className="col-sm-5 col-form-label">Score</label>
         <div className="col-sm">
-          <select id="scoreSelect" className="form-select" name="score" onChange={handleChange}>
+          <select id="scoreSelect" className="form-select" name="score" onChange={handleChange} value={review.score}>
             <option value="N/A">Select Score</option>
             <option value="10">10 (Masterpiece)</option>
             <option value="9">9 (Great)</option>

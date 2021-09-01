@@ -26,9 +26,11 @@ export interface ShowStructure {
     month: string;
     day: number;
   };
+  status: string
 };
 
 export interface ShowStructure {
+  current: number
   description: string;
   episodes: number;
   genres: string[];
@@ -42,6 +44,7 @@ export interface ShowStructure {
     month: string;
     day: number;
   };
+  myScore: number | "N/A";
 };
 
 export interface UserStructure {
@@ -52,6 +55,7 @@ export interface UserStructure {
 
 export interface WatchListStructure {
   _id: string;
+  current: number;
   episodes: number;
   img: string;
   name: string;
@@ -63,6 +67,7 @@ export interface WatchListStructure {
     day: number
   },
   watched: number,
+  myScore: number | "N/A";
 };
 
 export interface PostUserStructure {
