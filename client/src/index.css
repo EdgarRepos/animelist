@@ -1,13 +1,95 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#navbar a,
+#navbar p {
+  color: white;
+  text-decoration: none;
+}
+#navbar .dropdown-menu .dropdown-item a {
+  color: black;
+}
+#navbar .dropdown-item:hover {
+  background: transparent;
+}
+#navbar .dropdown-item:hover a {
+  color: lightgray;
+}
+#navbar .dropdown-toggle:hover {
+  color: lightgray;
+}
+
+.watchListCard .showImage {
+  margin-right: 20px;
+  max-height: 110px;
+}
+
+.watchListCard .showFormDiv {
+  max-width: 400px;
+  padding-bottom: 15px;
+}
+
+.topShowCard .showImage {
+  max-height: 110px;
+}
+
+.topShowCard .showFormDiv {
+  max-width: 400px;
+  padding-bottom: 15px;
+}
+
+.mainShowCard {
+  width: "320px";
+}
+
+.mainShowCard .episodes {
+  font-size: 13px;
+}
+
+.mainShowCard .main-content {
+  max-height: 225px;
+}
+
+.mainShowCard .main-content-image {
+  height: 100%;
+}
+
+.mainShowCard .main-content .elevenText {
+  font-size: 12px;
+}
+
+.mainShowCard .showFormDiv {
+  max-width: 400px;
+  padding-bottom: 15px;
+}
+
+.mainShowCard .airingDate {
+  font-size: 12px;
+}
+
+.mainShowCard .addButton {
+  font-size: 12px;
+}
+
+.mainShowCard .score {
+  font-size: 14px;
+}
+
+.mainShowCard .badge {
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+.registerFormContainer {
+  width: 400px;
+}
+
+.loginFormContainer {
+  width: 400px;
 }

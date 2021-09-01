@@ -9,11 +9,12 @@ interface ShowFormStructure {
 
 interface ShowFormProps {
   show: ShowFormStructure;
-  onSubmit: () => void;
   onCancel: () => void;
+  onSubmit: () => void;
+  onUpdate: () => void;
 };
 
-function ShowForm({onCancel, onSubmit, show} : ShowFormProps) {
+function ShowForm({onCancel, onSubmit, onUpdate, show} : ShowFormProps) {
   const [review, setReview] = useState<PostShowReviewStructure>({
     episodes: 0,
     name: show.name,
@@ -45,9 +46,8 @@ function ShowForm({onCancel, onSubmit, show} : ShowFormProps) {
         });
       }
       return;
-    }
-    
-    if (name === "status") {
+
+    } else if (name === "status") {
       setReview({
         ...review,
         [name]: value
@@ -58,19 +58,18 @@ function ShowForm({onCancel, onSubmit, show} : ShowFormProps) {
         [name]: Number(value)
       });
     }
+    
+    
   }
 
   function handleSubmit(e : React.FormEvent<EventTarget>) {
     e.preventDefault();
     onSubmit();
-
-    if (review.episodes)
-
-    if (!isNaN(review.episodes)) {
-      console.log(review);
       
-      postShowReview(review);
-    };
+    postShowReview(review)
+      .then(() => {
+        onUpdate();
+      })
   };
 
   return (

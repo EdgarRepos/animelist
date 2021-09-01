@@ -17,11 +17,13 @@ export interface TopShowStructure {
 interface TopShowProps {
   show: TopShowStructure,
   rank: number
+  handleUpdate: () => void
+
 };
 
 function TopShowCard(props : TopShowProps): JSX.Element {
   const [showForm, setShowForm] = useState<boolean>(false);
-  const {show, rank} = props;
+  const {show, rank, handleUpdate} = props;
   const {year, month, day} = show.startedAiring;
 
   function handleClick() {
@@ -37,7 +39,7 @@ function TopShowCard(props : TopShowProps): JSX.Element {
   };
 
   return (
-    <div className="d-grid gap-3">
+    <div className="d-grid gap-3 topShowCard">
       <div className="bg-light border row">
         <div className="p-2 bg-light border col-1 text-center">
           <p className="mt-4">{rank}</p>
@@ -47,28 +49,29 @@ function TopShowCard(props : TopShowProps): JSX.Element {
             <div className="p-1 col-2 text-center">
               <img
                 src={show.img}
-                className="img-fluid rounded-start"
-                alt="..."
-                style={{maxHeight: "85px"}}
+                className="img-fluid rounded-start showImage"
+                alt={show.name}
               />
             </div>
             <div className="p-1 col my-auto mx-auto">
               <h3 className="h5 p-0 m-0">{show.name}</h3>
-              <p className="p-0 m-0" style={{fontSize: "14px"}}>{show.episodes} episodes</p>
-              <p className="p-0 m-0" style={{fontSize: "14px"}}>{month} {day}, {year}</p>
+              <p className="p-0 m-0 episodes-date"><small>{show.episodes} episodes</small></p>
+              <p className="p-0 m-0 episodes-date"><small>{month} {day}, {year}</small></p>
             </div>
           </div>
         </div>
         <div className="p-2 bg-light border col-2 text-center">
-          <p className="mt-4">{show.score}</p>
+          <p className="mt-4">
+            {!(show.score === "N/A") && (show.score > 5 ? <i className="bi bi-star-fill text-warning"></i> : <i className="bi bi-star-half text-warning"></i>)} {show.score}
+          </p>
         </div>
         <div className="p-2 bg-light col-2 border text-center">
           {!showForm && <button className="btn btn-primary mt-4" onClick={handleClick} type="button">Add to WatchList</button>}
         </div>
       </div>
       {showForm && 
-        <div className="container-fluid mx-auto" style={{maxWidth: "400px"}}>
-          <ShowForm show={show} onSubmit={handleOnFormSubmit} onCancel={handleOnFormCancel} />
+        <div className="container-fluid mx-auto showFormDiv">
+          <ShowForm show={show} onSubmit={handleOnFormSubmit} onCancel={handleOnFormCancel} onUpdate={handleUpdate} />
         </div>
       }
     </div>

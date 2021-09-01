@@ -5,13 +5,17 @@ import MainShowCard from "./individual-cards/MainShowCard";
 function AllShowsCards() {
   const [data, setData] = useState<ShowStructure[]>([]);
 
+  data.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
   useEffect(() => {
     getShows().then(shows => setData(shows));
   }, []);
 
+  function handleUpdate() {}
+
   const renderCards : JSX.Element[] = data.map((anime) => 
     <div key={anime.id} className="col-md align-self-center">
-      <MainShowCard show={anime} />
+      <MainShowCard show={anime} handleUpdate={handleUpdate}/>
     </div>
   );
 

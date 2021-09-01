@@ -4,11 +4,11 @@ import HomeCard from "../components/cards/individual-cards/HomeCard";
  
 function Home() {
   return (
-    <div className="container-fluid mt-5 pt-3">
-      <div className="container-fluid mb-4 pb-2 ps-0 ms-0">
+    <div className="container mt-5 pt-4">
+      <div className="ps-0 ms-0">
         <h2 className="h4">Welcome to AnimeList!</h2>
       </div>
-      <div className="container-fluid mt-5">
+      <div className="mt-5">
         <Carousel />
         <div className="row mt-5">
           <div className="col">

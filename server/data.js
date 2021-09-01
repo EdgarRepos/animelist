@@ -27,10 +27,38 @@ function getCollection(name) {
   });
 }
 
-// exports.getWatchListShow = function(userId) {
-//   return getCollection(WATCH_LIST_COLLECTION)
-//     .then(collection => collection.findOne({userId: new ObjectId(userId)}));
-// };
+exports.averageScore = function(showId) {
+  return getCollection(WATCH_LIST_COLLECTION).then(collection => {
+    return collection.aggregate([
+      {
+        $match: {
+          showId: new ObjectId(showId),
+          score: {$ne: "N/A"}
+        },
+      },
+      {
+        $group: {
+          _id: "$showId",
+          score: {$avg: "$score"}
+        }
+      }
+    ])
+    .toArray().then(arrayShowWithAverage => {
+      const showWithAverage = arrayShowWithAverage[0];
+      return getCollection(SHOWS_COLLECTION)
+        .then(collection => collection.findOneAndUpdate(
+          {
+            _id: showWithAverage._id
+          },
+          {
+            $set: {
+              score: showWithAverage.score
+            }
+          }
+        ));
+        })
+      })
+}
 
 exports.getUser = function(username) {
   return getCollection(USERS_COLLECTION)

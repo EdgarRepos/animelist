@@ -15,11 +15,11 @@ function Register() {
   }
 
   return (
-    <div className="container-fluid mt-5 pt-3">
-      <div className="container mb-4 ms-0 ps-0">
+    <div className="container mt-5 pt-4">
+      <div className="mb-4 ms-0 ps-0">
         <h2 className="h4">Register</h2>
       </div>
-      <div className="container" style={{width: "400px"}}>
+      <div className="container pb-4 registerFormContainer">
         <h3>{title}</h3>
         <p>{subtitle}</p>
         {!userContext.isAuthorized && <RegisterForm />}
