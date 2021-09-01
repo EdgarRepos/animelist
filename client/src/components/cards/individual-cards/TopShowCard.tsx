@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import ShowForm from "../../ShowForm";
 
 export interface TopShowStructure {
+  current: number;
   img: string;
   score: number | "N/A";
   name: string;
@@ -12,6 +13,8 @@ export interface TopShowStructure {
     month: string,
     day: number
   }
+  status: string;
+  myScore: number | "N/A";
 };
 
 interface TopShowProps {

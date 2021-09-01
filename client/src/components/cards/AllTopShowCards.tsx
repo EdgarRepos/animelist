@@ -21,6 +21,7 @@ function AllTopShowCards() {
 
   const renderCards : JSX.Element[] = data.map((anime, index) => {
     const topShowProps : TopShowStructure = {
+      current: 0,
       img: anime.img,
       score: anime.score,
       name: anime.name,
@@ -30,7 +31,9 @@ function AllTopShowCards() {
         year: anime.startedAiring.year,
         month: anime.startedAiring.month,
         day: anime.startedAiring.day
-      }
+      },
+      status: "Add to Watchlist",
+      myScore: "N/A"
     };
     return <TopShowCard show={topShowProps} rank={index + 1} handleUpdate={handleUpdate} key={anime.id}/>
   });

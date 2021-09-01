@@ -9,7 +9,10 @@ The database has 4 collections:
 - watchlist: Where the content from the "add to watchlist" gets stored. The objects in there have its own personal Id and the
   unique id from the user and the show. The Id are stored as ObjectIds.
 
-The index basically just has the connection and listen.
-data is where all the functions that are used in the http methods are stored.
-The routes folder has inside all the routes divided so that they are more easier to get and organize.
-- Inside the routes is where all the methods for the respective routes are located.
+- The index basically just has the connection and listen.
+- data is where all the functions that are used in the http methods are stored, so this is where the logic is.
+  It is made in this way so that you have a cleaner look on the routes when you want to make a change and it
+  makes it easier to understand what is happening.
+- The routes folder has inside all the routes divided so that they are more easier to get and organize.
+- Inside the routes is where all the methods for the respective routes are located, like the get, post etc. 
+  of all the routes like shows, users, header, watchlist and myAccount.
