@@ -1,8 +1,6 @@
 # animelist
 
-Animelist is like a basic clone of myanimelist.
-
-As it name implies it is a site about anime, it has a collection of anime series (30).
+AnimeList is a site about anime, it has a collection of anime series (30).
 
 Though the site is about anime, due to its functionality it could be changed to movies, series,
 comics, etc. or instead of changing it you could add those sections and it would do a great job.
