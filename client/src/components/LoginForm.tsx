@@ -48,12 +48,30 @@ function LoginForm() {
     <form onSubmit={handleSubmit}>
       <div className="mb-2">
         <label className="form-label" htmlFor="usernameInput">Username</label>
-        <input className="form-control" disabled={userContext.isAuthorized} onChange={handleChange} id="usernameInput" name="username" type="text" value={values.username} />
+        <input
+          className="form-control"
+          disabled={userContext.isAuthorized}
+          onChange={handleChange}
+          id="usernameInput"
+          name="username"
+          placeholder="Your username"
+          type="text"
+          value={values.username}
+        />
       </div>
 
       <div className="mb-3">
         <label className="form-label" htmlFor="passwordInput">Password</label>
-        <input className="form-control" disabled={userContext.isAuthorized} onChange={handleChange} id="passwordInput" name="password" type="password" value={values.password}/>
+        <input
+          className="form-control"
+          disabled={userContext.isAuthorized}
+          onChange={handleChange}
+          id="passwordInput"
+          name="password"
+          placeholder="Type your password"
+          type="password"
+          value={values.password}
+        />
         {hasSubmitBeenClicked ? <span className="badge text-dark">Wrong username or password</span> : null}
       </div>
 

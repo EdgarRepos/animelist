@@ -37,7 +37,7 @@ function App() {
   })
 
   return (
-    <div className="container-fluid pe-1 ps-1 pb-2 border" style={{maxWidth: "1100px"}}>
+    <div className="container pe-1 ps-1 pb-2 border">
       <Router>
         <UserContext.Provider value={userContextValue}>
           <Navbar />

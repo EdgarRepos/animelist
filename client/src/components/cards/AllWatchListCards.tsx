@@ -9,7 +9,7 @@ function AllWatchListCards() {
     getWatchlist().then(shows => setData(shows));
   }, []);
 
-  function handleWatchlistUpdate() {
+  function handleUpdate() {
     getWatchlist().then(shows => setData(shows));
   }
 
@@ -28,19 +28,22 @@ function AllWatchListCards() {
       },
       watched: anime.watched,
     }
-    return <WatchListCard show={topShowProps} rank={index + 1} onWatchListUpdate={handleWatchlistUpdate} key={anime._id}/>
+    return <WatchListCard show={topShowProps} index={index + 1} handleUpdate={handleUpdate} key={anime._id}/>
   });
 
   return (
     <div className="d-grid gap-2">
       <div className="bg-light border row">
         <div className="p-1 col-1 text-center border">
-          <p className="my-auto bg-light">Rank</p>
+          <p className="my-auto bg-light">#</p>
         </div>
-        <div className="p-1 col-7 text-center border">
+        <div className="p-1 col-6 text-center border">
           <p className="my-auto bg-light">Title</p>
         </div>
         <div className="p-1 col-2 text-center border">
+          <p className="my-auto bg-light">Progress</p>
+        </div>
+        <div className="p-1 col-1 text-center border">
           <p className="my-auto bg-light">Score</p>
         </div>
         <div className="p-1 col-2 text-center border">

@@ -1,17 +1,17 @@
 import React from "react";
 import AllWatchListCards from "../components/cards/AllWatchListCards";
 
-function TopShows() {
+function Watchlist() {
   return (
-    <div className="container-fluid mt-5 pt-3">
-      <div className="container-fluid mb-4 ps-0 ms-0">
+    <div className="container mt-5 pt-4">
+      <div className="container mb-4 ps-0 ms-0">
         <h2 className="h4">Watchlist</h2>
       </div>
-      <div className="container-fluid">
+      <div className="container">
         <AllWatchListCards />
       </div>
     </div>
   );
 };
 
-export default TopShows;
+export default Watchlist;

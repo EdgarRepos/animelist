@@ -4,15 +4,15 @@ import ShowForm from "../../ShowForm";
 
 interface MainShowCardProps {
   show: ShowStructure
+  handleUpdate: () => void
 }
 
-function MainShowCard({show} : MainShowCardProps): JSX.Element {
+function MainShowCard({handleUpdate, show} : MainShowCardProps): JSX.Element {
   const [showForm, setShowForm] = useState<boolean>(false)
   const categories = show.genres.map(genre => 
     <span
       className="badge rounded-pill bg-secondary"
-      key={genre + show.name}
-      style={{fontSize: "8.5px"}}
+      key={show._id}
     >
       {genre}
     </span>
@@ -31,16 +31,12 @@ function MainShowCard({show} : MainShowCardProps): JSX.Element {
   };
 
   return (
-    <div className="card mx-auto mb-3" style={{width: "320px"}}>
-      
+    <div className="card mx-auto mb-3 mainShowCard">
       {!showForm 
         ? <>
             <div className="card-header">
-              <h3 className="h6 text-center" >{show.name}</h3>
-              <p 
-                className="text-center mb-0"
-                style={{fontSize: "12px"}}
-              >
+              <h3 className="h6 m-1 mb-0 text-center">{show.name}</h3>
+              <p className="text-center mb-2 episodes">
                 {show.episodes} eps
               </p>
               <div className="text-center" >
@@ -49,24 +45,24 @@ function MainShowCard({show} : MainShowCardProps): JSX.Element {
             </div>
 
             <div className="row g-0">
-              <div className="col-6">
+              <div className="col">
                 <img
                   src={show.img}
-                  className="img-fluid rounded-start"
+                  className="img-fluid rounded-start main-content-image"
                   alt="..."
-                  style={{maxHeight: "225px"}}
                 />
               </div>
 
-              <div className="col-6 overflow-auto" style={{maxHeight: "225px"}}>
-                <p className="ms-1 me-1" style={{fontSize: "11px"}}>{show.description}</p>
+              <div className="col-7 overflow-auto main-content">
+                <p className="m-2 elevenText">{show.description}</p>
               </div>
             </div>
           </>
-        : <div className="container-fluid mx-auto my-2" style={{maxWidth: "400px"}}>
+        : <div className="container-fluid mx-auto my-2 showFormDiv">
             <ShowForm
               onCancel={handleOnFormCancel}
               onSubmit={handleOnFormSubmit}
+              onUpdate={handleUpdate}
               show={show}
             />
           </div>
@@ -74,14 +70,18 @@ function MainShowCard({show} : MainShowCardProps): JSX.Element {
 
       <div className="card-footer">
         <div className="row">
-          <div className="col-4 text-center">
-            <p className="mb-0" style={{fontSize: "12px"}}>{show.startedAiring.month} {show.startedAiring.day}, {show.startedAiring.year}</p>
+          <div className="col-4 position-relative py-2">
+            <p className="airingDate position-absolute top-50 start-50 translate-middle">
+              {show.startedAiring.month} {show.startedAiring.day}, {show.startedAiring.year
+            }</p>
           </div>
           <div className="col-5 text-center">
-            {!showForm && <button className="btn btn-primary mb-0" onClick={handleClick} style={{fontSize: "11px"}} type="button">Add to watchlist</button>}
+            {!showForm &&
+              <button className="btn btn-primary addButton" onClick={handleClick} type="button">Add to watchlist</button>
+            }
           </div>
-          <div className="col-3 text-center">
-            <p className="mb-0" style={{fontSize: "14px"}}>{show.score}</p>
+          <div className="col-3 position-relative py-2">
+            <p className="score position-absolute top-50 start-50 translate-middle">{!(show.score === "N/A") && <i className="bi bi-star"></i>} {show.score}</p>
           </div>
         </div>
       </div>

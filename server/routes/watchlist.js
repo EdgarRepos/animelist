@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const ObjectId = require("mongodb").ObjectId;
 
 const data = require("../data");
 
@@ -9,8 +8,14 @@ router.post("/", (req, res) => {
   } else {
     data.updateWatchListShow(req.body, req.session.userId)
       .then((result) => {
-        console.log("Update", result); // ERASE!!!!!!!!!!
-        res.json(result);
+        res.json(result)
+        data.averageScore(req.body.showId)
+          .then(() => {
+            console.log("Updated score:")
+          })
+          .catch(error => {
+            console.error("Error in averageScore:", error)
+          })
       })
       .catch((error) => {
         console.error("Error in updateWatchListShow:", error);
