@@ -12,11 +12,15 @@ function MainShowCard({handleUpdate, show} : MainShowCardProps): JSX.Element {
   const categories = show.genres.map(genre => 
     <span
       className="badge rounded-pill bg-secondary"
-      key={show._id}
+      key={show._id + genre}
     >
       {genre}
     </span>
   );
+
+  if (show.score !== "N/A") {
+    show.score = parseFloat(show.score.toFixed(1));
+  }
 
   function handleClick(e : React.FormEvent<EventTarget>) {
     setShowForm(true);

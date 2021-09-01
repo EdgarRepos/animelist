@@ -29,6 +29,10 @@ function TopShowCard(props : TopShowProps): JSX.Element {
   const {show, rank, handleUpdate} = props;
   const {year, month, day} = show.startedAiring;
 
+  if (show.score !== "N/A") {
+    show.score = parseFloat(show.score.toFixed(1));
+  }
+
   function handleClick() {
     setShowForm(true);
   };

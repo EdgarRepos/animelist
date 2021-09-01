@@ -30,7 +30,7 @@ function AllWatchListCards() {
       watched: anime.watched,
       myScore: anime.score,
     }
-    return <WatchListCard show={topShowProps} index={index + 1} handleUpdate={handleUpdate} key={anime._id}/>
+    return <WatchListCard show={topShowProps} index={index + 1} handleUpdate={handleUpdate} key={anime._id + anime.episodes}/>
   });
 
   return (

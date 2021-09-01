@@ -13,8 +13,8 @@ function AllShowsCards() {
 
   function handleUpdate() {}
 
-  const renderCards : JSX.Element[] = data.map((anime) => 
-    <div key={anime.id} className="col-md align-self-center">
+  const renderCards : JSX.Element[] = data.map((anime, index) => 
+    <div key={anime.id + index} className="col-md align-self-center">
       <MainShowCard show={anime} handleUpdate={handleUpdate}/>
     </div>
   );
